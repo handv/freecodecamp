@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style media="screen">
+    * {
+      padding: 0;
+      margin: 0;
+      font-size: 14px;
+      color: white;
+    }
+
+    .backgroundPart {
+      background: pink;
+    }
+
+    .colorPart {
+      color: pink;
+    }
+
+    .content {
+      width: 550px;
+      margin: 100px auto;
+    }
+
+    #quote {
+      width: 100%;
+      height: 300px;
+      background: white;
+      border-radius: 1%;
+    }
+
+    #quote h2 {
+      width: 450px;
+      margin: 0 auto;
+      padding: 50px 0 30px;
+      font-size: 24px;
+    }
+
+    #quote #text {
+      font-size: inherit;
+    }
+
+    #quote>span {
+      display: block;
+      width: 400px;
+      margin: 0 auto;
+      text-align: right;
+    }
+
+    .content>p {
+      padding-top: 20px;
+      text-align: center;
+    }
+
+    .foot {
+      width: 450px;
+      margin: 30px auto 0;
+    }
+
+    .foot ul {
+      list-style: none;
+      display: inline-block;
+    }
+
+    .btnPart {
+      display: inline-block;
+      text-align: center;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      border-radius: 2px;
+    }
+
+    .foot ul li {
+      font-size: 20px;
+    }
+
+    .foot button {
+      border: 0;
+      outline: none;
+      width: 120px;
+      font-size: 14px;
+      float: right;
+      margin-right: 30px;
+    }
+  </style>
+  <title>Document</title>
+</head>
+
+<body class="backgroundPart">
+  <div class="content">
+    <div id="quote">
+      <h2 class="colorPart"><i class="fa fa-quote-left colorPart"></i> <span class="colorPart" id="text">Wait a minute, wait a minute. You ain't heard nothin' yet!</span></h2>
+      <span class="colorPart" id="author">- Dwight D. Eisenhower</span>
+      <div class="foot">
+        <ul>
+          <li class="backgroundPart btnPart"><i class="fa fa-twitter"></i></li>
+          <li class="backgroundPart btnPart"><i class="fa fa-tumblr"></i></li>
+        </ul>
+        <button class="backgroundPart btnPart" id="quoteBtn">New quote</button>
+      </div>
+    </div>
+    <p>by handw</p>
+  </div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+  document.getElementById('quoteBtn').onclick = function() {
+    getQuote();
+    var color = generateColor();
+    var colorArr = document.getElementsByClassName('colorPart');
+    var backgroundArr = document.getElementsByClassName('backgroundPart');
+    changeColor(colorArr, 'color', color);
+    changeColor(backgroundArr, 'background', color);
+  }
+
+  function generateColor() {
+    var r = parseInt(Math.random() * 256);
+    var g = parseInt(Math.random() * 256);
+    var b = parseInt(Math.random() * 256);
+    var color = 'rgb(' + r + ',' + g + ',' + b + ')';
+    return color;
+  }
+
+  function changeColor(arr, attr, color) {
+    for (var i = 0; i < arr.length; i++) {
+      arr[i].style[attr] = color;
+    }
+  }
+
+  function getQuote() {
+    $.ajax({
+      headers: {
+        "X-Mashape-Key": "OivH71yd3tmshl9YKzFH7BTzBVRQp1RaKLajsnafgL2aPsfP9V",
+        Accept: "application/json",
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      url: 'https://andruxnet-random-famous-quotes.p.mashape.com/cat=',
+      success: function(r) {
+        if (typeof r === 'string') {
+          r = JSON.parse(r);
+        }
+        currentQuote = r.quote;
+        currentAuthor = r.author;
+
+        $("#text").animate({
+          opacity: 0
+        }, 500, $('#text').html(r.quote));
+
+        $("#author").animate({
+          opacity: 0
+        }, 500, $('#author').html('- ' + r.author));
+      }
+    });
+  }
+</script>
+
+</html>

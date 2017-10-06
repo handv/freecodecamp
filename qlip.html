@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style media="screen">
+    * {
+      padding: 0;
+      margin: 0;
+      font-size: 14px;
+      color: #666;
+    }
+
+    body {
+      background: #666;
+      position: relative;
+    }
+    /* header部分 */
+
+    header.head {
+      height: 70px;
+      background: #722872;
+      z-index: 10;
+      position: fixed;
+      width: 100%;
+    }
+
+    header.head div {
+      float: left;
+      width: 50%;
+      height: 100%;
+    }
+
+    .headLeft {
+      font: normal 50px/50px arial, sans-serif;
+      color: white;
+      text-align: center;
+    }
+
+    .headRight ul {
+      list-style: none;
+    }
+
+    .headRight ul li {
+      display: inline-block;
+      height: 70px;
+      margin-left: -5px;
+    }
+
+    .headRight a {
+      display: block;
+      padding: 0 20px;
+      margin: 15px auto;
+      height: 40px;
+      text-decoration: none;
+      line-height: 40px;
+      text-align: center;
+      color: #777;
+      font-weight: bold;
+    }
+
+    .headRight a:hover {
+      color: #333;
+      background-color: transparent;
+      box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.1);
+    }
+
+    a.show {
+      background-color: #e7e7e7;
+      color: #555;
+    }
+
+    a.show:hover {
+      background-color: #e7e7e7;
+      color: #555;
+    }
+    /* container部分 */
+
+    .myContext {
+      width: 80%;
+      margin: 0 auto;
+      padding: 70px 0 200px;
+    }
+
+    .message {
+      width: 100%;
+      background: #eee;
+    }
+
+    .message hr {
+      margin: 40px auto 15px;
+      max-width: 500px;
+      border: 0;
+      border-top: solid 5px;
+    }
+    /* message公共部分 */
+
+    .msgHead {
+      padding: 20px 0;
+      text-align: center;
+      color: #777;
+      font-size: 30px;
+    }
+
+    .message .msgHr {
+      border-color: #aaa;
+      margin: 10px auto;
+      text-align: center;
+    }
+
+    .msgHr::after {
+      content: '</>';
+      color: #aaa;
+      font-size: 30px;
+      font-weight: bold;
+      position: relative;
+      top: -26px;
+      right: 0;
+      display: inline-block;
+      background: #eee;
+      padding: 0 10px;
+    }
+
+    #about {
+      height: 350px;
+      background: #aaa;
+    }
+
+    .submess {
+      padding: 50px;
+      height: 250px;
+    }
+
+    .pPart,
+    .imgPart {
+      display: inline-block;
+    }
+
+    .pPart {
+      width: 69%;
+      height: 250px;
+      margin-top: 40px;
+      text-align: right;
+    }
+
+    .pPart p {
+      font-size: 20px;
+      color: white;
+    }
+
+
+    .pPart hr {
+      border-color: white;
+      margin-right: 0;
+    }
+
+    .pPart hr::after {
+      content: '</>';
+      color: white;
+      font-size: 30px;
+      font-weight: bold;
+      position: relative;
+      top: -26px;
+      right: 0;
+      display: inline-block;
+      background: #aaa;
+      padding-left: 10px;
+    }
+
+    .imgPart {
+      border-radius: 50%;
+      width: 250px;
+      float: right;
+      margin-right: 10px;
+    }
+    /* protfolio部分 */
+
+    .imgSection {
+      width: 90%;
+      margin: 0 auto;
+      padding: 30px 0;
+    }
+
+    .imgSection img {
+      width: 450px;
+      max-height: 300px;
+      display: inline-block;
+      margin: 0 30px;
+      vertical-align: middle;
+    }
+    /* contact */
+
+    #contact {
+      border-top: 1px solid #aaa;
+      padding-bottom: 20px;
+    }
+
+    #contactDiv {
+      width: 90%;
+      height: 400px;
+      margin: 0 auto;
+    }
+
+    #contactDiv .msgForm,
+    .msgP {
+      display: inline-block;
+      height: 100%;
+    }
+
+    #contactDiv .msgForm {
+      width: 45%;
+      margin: 0 20px;
+    }
+
+    #contactDiv .msgP {
+      max-width: 40%;
+      vertical-align: bottom;
+    }
+    /* contact form */
+
+    .msgFormDiv label,
+    input {
+      display: block;
+      line-height: 35px;
+    }
+
+    .msgFormDiv input,
+    textarea {
+      font-size: 22px;
+      border: 0;
+      border-bottom: 1px solid #aaa;
+      background: #eee;
+      width: 70%;
+      outline: none;
+    }
+
+    .msgFormDiv label {
+      visibility: hidden;
+    }
+
+    .msgFormDiv label.show {
+      visibility: visible;
+      font-size: 18px;
+      color: #722872;
+    }
+
+    #sendBtn {
+      font-size: 22px;
+      width: 70px;
+      border: 1px solid #aaa;
+      background: inherit;
+      margin: 10px 0;
+      cursor: pointer;
+    }
+    /* contact p */
+
+    .msgP p {
+      font-size: 22px;
+    }
+
+    .msgP p:nth-child(2) {
+      padding: 30px 0 40px;
+    }
+    /* footer部分 */
+
+    footer {
+      height: 200px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #aaa;
+      color: white;
+    }
+
+    footer .footPart {
+      width: 80%;
+      margin: 0 auto;
+      height: 100%;
+    }
+
+    .footPart .footSub {
+      float: left;
+      width: 50%;
+    }
+
+    .footSub h3,
+    .footSub p {
+      text-align: center;
+      line-height: 100%;
+      color: white;
+      font-size: 24px;
+    }
+
+    .footSub h3 {
+      padding: 40px 0;
+    }
+
+    .footLeft p,
+    .footLeft a {
+      font-size: 20px;
+    }
+
+    .footLeft a {
+      color: #722872;
+      text-decoration: none;
+    }
+
+    .footRight ul {
+      list-style: none;
+      text-align: center;
+    }
+
+    .footRight ul li {
+      display: inline-block;
+      border-radius: 50%;
+      border: 1px solid white;
+    }
+
+    i.fa {
+      color: white;
+    }
+
+    .footBottom {
+      background: #722872;
+      height: 60px;
+    }
+
+    .footBottom p {
+      text-align: center;
+      font-size: 20px;
+      line-height: 60px;
+      color: white;
+    }
+  </style>
+  <title>qlip</title>
+</head>
+
+<body>
+  <header class="head">
+    <div class="headLeft">
+      qlip
+    </div>
+    <div class="headRight">
+      <ul>
+        <li><a href="#about" class="headA" id="aboutA">ABOUT</a></li>
+        <li><a href="#protfolio" class="headA" id="protfolioA">PROTFOLIO</a></li>
+        <li><a href="#contact" class="headA" id="contactA">CONTACT</a></li>
+      </ul>
+    </div>
+  </header>
+  <div class="myContainer">
+    <div class="myContext">
+      <div class="message" id="about">
+        <div class="submess">
+          <div class="pPart">
+            <p>
+              Front-End Developer and UX/UI designer, with practical experience in project management, branding strategy, and creative direction; devoted to functional programming and information architecture.
+            </p>
+            <hr />
+            <p>
+              Web Developer - User Experience Designer - Graphic Artist
+            </p>
+          </div>
+          <img class="imgPart" src="http://qlip.in/images/avatar.jpg" alt="A picture of Justin looking at San Francisco from across the Golden Gate Bridge.">
+        </div>
+      </div>
+      <div class="message" id="protfolio">
+        <header class="msgHead">PORTFOLIO</header>
+        <hr class="msgHr">
+        <div class="imgSection">
+          <img src="http://qlip.in/images/YMCA-Realtor-Donation-3.jpg" alt="">
+          <img src="http://qlip.in/images/webcaballero.jpg" alt="">
+        </div>
+        <div class="imgSection">
+          <img src="http://qlip.in/images/webmarqas.jpg" alt="">
+          <img src="http://qlip.in/images/webbrandaxis.jpg" alt="">
+        </div>
+        <div class="imgSection">
+          <img src="http://qlip.in/images/panacea1.jpg" alt="">
+          <img src="http://qlip.in/images/webgatomalo.jpg" alt="">
+        </div>
+      </div>
+      <div class="message" id="contact">
+        <header class="msgHead">CONTACT</header>
+        <hr class="msgHr">
+        <div id="contactDiv">
+          <form action="" class="msgForm">
+            <div class="msgFormDiv">
+              <label for="userName" id="userNameLabel">Name</label>
+              <input type="text" placeholder="Name" id="userName" class="msgFormDivInput">
+            </div>
+            <div class="msgFormDiv">
+              <label for="email" id="emailLabel">Email Address</label>
+              <input type="text" placeholder="Email Address" id="email" class="msgFormDivInput">
+            </div>
+            <div class="msgFormDiv">
+              <label for="phoneNumber" id="phoneNumberLabel">Phone Number</label>
+              <input type="text" placeholder="Phone Number" id="phoneNumber" class="msgFormDivInput">
+            </div>
+            <div class="msgFormDiv">
+              <label for="messageText" id="messageTextLabel">Message</label>
+              <textarea id="messageText" rows="4" cols="60" placeholder="Message" class="msgFormDivInput"></textarea>
+            </div>
+            <input type="button" value="Send" id="sendBtn">
+          </form>
+          <div class="msgP">
+            <p>Want to get in touch with me? Be it to request more info about myself or my experience, to ask for my resume, tips on how to solve your sudoku, random questions about the universe and the meaning of life, or even if only for some nice Fika
+              here in stunning Toronto... just feel free to drop me a line anytime.</p>
+            <p>I promise to reply A.S.A.P.</p>
+            <p>Note: No spam/soliciting pour moi, merci :)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footPart">
+      <div class="footSub footLeft">
+        <h3>ABOUT THIS PAGE</h3>
+        <p>Made with <i class="fa fa-coffee"></i> and <i class="fa fa-music" aria-hidden="true"></i> by <a href="http://qlip.in">Justin Sane</a>.</p>
+      </div>
+      <div class="footSub footRight">
+        <h3>AROUND THE WEB</h3>
+        <ul>
+          <li><a href="https://www.linkedin.com/in/hallaathrad"><i class="fa fa-fw fa-linkedin"></i></a></li>
+          <li><a href="https://github.com/hallaathrad"><i class="fa fa-fw fa-github"></i></a></li>
+          <li><a href="https://twitter.com/hallaathrad"><i class="fa fa-fw fa-twitter"></i></a></li>
+          <li><a href="https://www.flickr.com/photos/hallaathrad/"><i class="fa fa-fw fa-flickr"></i></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footBottom">
+      <p>qlip © 2017. All Rights Reversed</p>
+    </div>
+  </footer>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript">
+  $(function() {
+    __main();
+  })
+
+  function __main() {
+    showNav();
+    showLabel();
+  }
+
+  function showNav() {
+    $(window).scroll(function() {
+      var top = document.documentElement.scrollTop || document.body.scrollTop;
+      var curId = ""; // 当前页面 div 快 的id
+      var items = $('.message');
+      items.each(function(i, e) {
+        var m = $(this);
+        var itemsTop = m.offset().top;
+        if (top > itemsTop - 75) {
+          curId = "#" + m.attr("id") + "A";
+        } else {
+          return false;
+        }
+      });
+      $('.headA').removeClass('show');
+      $(curId).addClass('show');
+    });
+  }
+
+  function showLabel() {
+    $('.msgFormDivInput').bind('input propertychange', function() {
+      var items = $('.msgFormDivInput');
+      items.each(function(i, e) {
+        var m = $(this);
+        if (m.val() != "") {
+          m.prev().addClass('show');
+        } else {
+          m.prev().removeClass('show');
+        }
+      });
+    });
+  }
+</script>
+
+</html>

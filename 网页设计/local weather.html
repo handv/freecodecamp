@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style media="screen">
+    * {
+      padding: 0;
+      margin: 0;
+      background-color: #161616;
+      text-align: center;
+    }
+
+    body {
+      color: #fff;
+      font-family: 'Roboto', sans-serif;
+      background-color: currentColor;
+    }
+
+    header,
+    .weather {
+      padding-top: 10px;
+    }
+
+    .status p {
+      text-transform: capitalize;
+      font-size: 20px;
+      padding-top: 5px;
+    }
+
+    div.hide {
+      display: none;
+    }
+
+    .icon {
+      position: relative;
+      display: inline-block;
+      width: 12em;
+      height: 10em;
+      font-size: 1em;
+      color: #161616;
+      /* control icon size here */
+    }
+
+    .cloud {
+      position: absolute;
+      z-index: 1;
+      top: 50%;
+      left: 50%;
+      width: 3.6875em;
+      height: 3.6875em;
+      margin: -1.84375em;
+      background: currentColor;
+      border-radius: 50%;
+      box-shadow: -2.1875em 0.6875em 0 -0.6875em,
+      2.0625em 0.9375em 0 -0.9375em,
+      0 0 0 0.375em #fff,
+      -2.1875em 0.6875em 0 -0.3125em #fff,
+      2.0625em 0.9375em 0 -0.5625em #fff;
+    }
+
+    .cloud:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: -0.5em;
+      display: block;
+      width: 4.5625em;
+      height: 1em;
+      background: currentColor;
+      box-shadow: 0 0.4375em 0 -0.0625em #fff;
+    }
+
+    .cloud:nth-child(2) {
+      z-index: 0;
+      background: #fff;
+      box-shadow: -2.1875em 0.6875em 0 -0.6875em #fff,
+      2.0625em 0.9375em 0 -0.9375em #fff,
+      0 0 0 0.375em #fff,
+      -2.1875em 0.6875em 0 -0.3125em #fff,
+      2.0625em 0.9375em 0 -0.5625em #fff;
+      opacity: 0.3;
+      transform: scale(0.5) translate(6em, -3em);
+      animation: cloud 4s linear infinite;
+    }
+
+    .cloud:nth-child(2):after {
+      background: #fff;
+    }
+
+    .sun {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 2.5rem;
+      height: 2.5rem;
+      margin: -1.25rem;
+      background: currentColor;
+      border-radius: 50%;
+      box-shadow: 0 0 0 0.375rem #fff;
+      -webkit-animation: spin 12s infinite linear;
+      animation: spin 12s infinite linear;
+    }
+
+    .rays {
+      position: absolute;
+      top: -2rem;
+      left: 50%;
+      display: block;
+      width: 0.375rem;
+      height: 1.125rem;
+      margin-left: -0.1875rem;
+      background: #fff;
+      border-radius: 0.25rem;
+      box-shadow: 0 5.375rem #fff;
+    }
+
+    .rays:before,
+    .rays:after {
+      content: '';
+      position: absolute;
+      top: 0rem;
+      left: 0rem;
+      display: block;
+      width: 0.375rem;
+      height: 1.125rem;
+      -webkit-transform: rotate(60deg);
+      -ms-transform: rotate(60deg);
+      transform: rotate(60deg);
+      -webkit-transform-origin: 50% 3.25rem;
+      -ms-transform-origin: 50% 3.25rem;
+      transform-origin: 50% 3.25rem;
+      background: #fff;
+      border-radius: 0.25rem;
+      box-shadow: 0 5.375rem #fff;
+    }
+
+    .rays:before {
+      -webkit-transform: rotate(120deg);
+      -ms-transform: rotate(120deg);
+      transform: rotate(120deg);
+    }
+
+    .cloud+.sun {
+      margin: -2rem 1rem;
+    }
+
+    .rain,
+    .lightning,
+    .snow {
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      left: 50%;
+      width: 3.75rem;
+      height: 3.75rem;
+      margin: 0.375rem 0 0 -2rem;
+      background: currentColor;
+    }
+
+    .rain:after {
+      content: '';
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      left: 50%;
+      width: 1.125rem;
+      height: 1.125rem;
+      margin: -1rem 0 0 -0.25rem;
+      background: #0cf;
+      border-radius: 100% 0 60% 50% / 60% 0 100% 50%;
+      box-shadow: 0.625rem 0.875rem 0 -0.125rem rgba(255, 255, 255, 0.2), -0.875rem 1.125rem 0 -0.125rem rgba(255, 255, 255, 0.2), -1.375rem -0.125rem 0 rgba(255, 255, 255, 0.2);
+      -webkit-transform: rotate(-28deg);
+      -ms-transform: rotate(-28deg);
+      transform: rotate(-28deg);
+      -webkit-animation: rain 3s linear infinite;
+      animation: rain 3s linear infinite;
+    }
+
+    .bolt {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 1rem;
+      height: 0.5rem;
+      margin: -0.875rem 0 0 -0.5rem;
+      color: #fff;
+      background: #fff;
+      opacity: 0.3;
+      -webkit-animation: lightning 2s linear infinite;
+      animation: lightning 2s linear infinite;
+    }
+
+    .bolt:nth-child(2) {
+      width: 0.5rem;
+      height: 0.25rem;
+      margin: -1.875rem 0 0 -1.5rem;
+      -webkit-transform: translate(2.5rem, 2.25rem);
+      -ms-transform: translate(2.5rem, 2.25rem);
+      transform: translate(2.5rem, 2.25rem);
+      opacity: 0.2;
+      -webkit-animation: lightning 1.5s linear infinite;
+      animation: lightning 1.5s linear infinite;
+    }
+
+    .bolt:before,
+    .bolt:after {
+      content: '';
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      left: 50%;
+      margin: -1.75rem 0 0 -1.25rem;
+      border-top: 1.25rem solid transparent;
+      border-right: 0.75rem solid;
+      border-bottom: 0.75rem solid;
+      border-left: 0.5rem solid transparent;
+      -webkit-transform: skewX(-10deg);
+      -ms-transform: skewX(-10deg);
+      transform: skewX(-10deg);
+    }
+
+    .bolt:after {
+      margin: -0.25rem 0 0 -0.0125rem;
+      border-top: 0.75rem solid;
+      border-right: 0.5rem solid transparent;
+      border-bottom: 1.25rem solid transparent;
+      border-left: 0.75rem solid;
+      -webkit-transform: skewX(-10deg);
+      -ms-transform: skewX(-10deg);
+      transform: skewX(-10deg);
+    }
+
+    .bolt:nth-child(2):before {
+      margin: -0.875rem 0 0 -0.75rem;
+      border-top: 0.625rem solid transparent;
+      border-right: 0.375rem solid;
+      border-bottom: 0.375rem solid;
+      border-left: 0.25rem solid transparent;
+    }
+
+    .bolt:nth-child(2):after {
+      margin: -0.125rem 0 0 0;
+      border-top: 0.375rem solid;
+      border-right: 0.25rem solid transparent;
+      border-bottom: 0.625rem solid transparent;
+      border-left: 0.375rem solid;
+    }
+
+    .flake:before,
+    .flake:after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: -1.25rem 0 0 -1.25rem;
+      content: '\2744';
+      color: #fff;
+      list-height: 1em;
+      opacity: 0.2;
+      -webkit-animation: spin 8s linear infinite reverse;
+      animation: spin 8s linear infinite reverse;
+    }
+
+    .flake:after {
+      margin: -0.125rem 0 0 -1.375rem;
+      font-size: 1.5rem;
+      opacity: 0.4;
+      -webkit-animation: spin 14s linear infinite;
+      animation: spin 14s linear infinite;
+    }
+
+    .flake:nth-child(2):before {
+      margin: -0.875rem 0 0 0.25rem;
+      font-size: 1.25rem;
+      opacity: 0.2;
+      -webkit-animation: spin 10s linear infinite;
+      animation: spin 10s linear infinite;
+    }
+
+    .flake:nth-child(2):after {
+      margin: 0.5rem 0 0 0.125rem;
+      font-size: 2rem;
+      opacity: 0.4;
+      -webkit-animation: spin 16s linear infinite reverse;
+      animation: spin 16s linear infinite reverse;
+    }
+    /* Animations */
+
+    @-webkit-keyframes spin {
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes spin {
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+    @-webkit-keyframes cloud {
+      0% {
+        opacity: 0;
+      }
+      50% {
+        opacity: 0.3;
+      }
+      100% {
+        opacity: 0;
+        -webkit-transform: scale(0.5) translate(-6rem, -3rem);
+        transform: scale(0.5) translate(-6rem, -3rem);
+      }
+    }
+
+    @keyframes cloud {
+      0% {
+        opacity: 0;
+      }
+      50% {
+        opacity: 0.3;
+      }
+      100% {
+        opacity: 0;
+        -webkit-transform: scale(0.5) translate(-6rem, -3rem);
+        transform: scale(0.5) translate(-6rem, -3rem);
+      }
+    }
+
+    @-webkit-keyframes rain {
+      0% {
+        background: #0cf;
+        box-shadow: 0.625rem 0.875rem 0 -0.125rem rgba(255, 255, 255, 0.2), -0.875rem 1.125rem 0 -0.125rem rgba(255, 255, 255, 0.2), -1.375rem -0.125rem 0 #0cf;
+      }
+      25% {
+        box-shadow: 0.625rem 0.875rem 0 -0.125rem rgba(255, 255, 255, 0.2), -0.875rem 1.125rem 0 -0.125rem #0cf, -1.375rem -0.125rem 0 rgba(255, 255, 255, 0.2);
+      }
+      50% {
+        background: rgba(255, 255, 255, 0.3);
+        box-shadow: 0.625rem 0.875rem 0 -0.125rem #0cf, -0.875rem 1.125rem 0 -0.125rem rgba(255, 255, 255, 0.2), -1.375rem -0.125rem 0 rgba(255, 255, 255, 0.2);
+      }
+      100% {
+        box-shadow: 0.625rem 0.875rem 0 -0.125rem rgba(255, 255, 255, 0.2), -0.875rem 1.125rem 0 -0.125rem rgba(255, 255, 255, 0.2), -1.375rem -0.125rem 0 #0cf;
+      }
+    }
+
+    @keyframes rain {
+      0% {
+        background: #0cf;
+        box-shadow: 0.625rem 0.875rem 0 -0.125rem rgba(255, 255, 255, 0.2), -0.875rem 1.125rem 0 -0.125rem rgba(255, 255, 255, 0.2), -1.375rem -0.125rem 0 #0cf;
+      }
+      25% {
+        box-shadow: 0.625rem 0.875rem 0 -0.125rem rgba(255, 255, 255, 0.2), -0.875rem 1.125rem 0 -0.125rem #0cf, -1.375rem -0.125rem 0 rgba(255, 255, 255, 0.2);
+      }
+      50% {
+        background: rgba(255, 255, 255, 0.3);
+        box-shadow: 0.625rem 0.875rem 0 -0.125rem #0cf, -0.875rem 1.125rem 0 -0.125rem rgba(255, 255, 255, 0.2), -1.375rem -0.125rem 0 rgba(255, 255, 255, 0.2);
+      }
+      100% {
+        box-shadow: 0.625rem 0.875rem 0 -0.125rem rgba(255, 255, 255, 0.2), -0.875rem 1.125rem 0 -0.125rem rgba(255, 255, 255, 0.2), -1.375rem -0.125rem 0 #0cf;
+      }
+    }
+
+    @-webkit-keyframes lightning {
+      45% {
+        color: #fff;
+        background: #fff;
+        opacity: 0.2;
+      }
+      50% {
+        color: #0cf;
+        background: #0cf;
+        opacity: 1;
+      }
+      55% {
+        color: #fff;
+        background: #fff;
+        opacity: 0.2;
+      }
+    }
+
+    @keyframes lightning {
+      45% {
+        color: #fff;
+        background: #fff;
+        opacity: 0.2;
+      }
+      50% {
+        color: #0cf;
+        background: #0cf;
+        opacity: 1;
+      }
+      55% {
+        color: #fff;
+        background: #fff;
+        opacity: 0.2;
+      }
+    }
+  </style>
+  <title>local weather</title>
+</head>
+
+<body>
+  <header>
+    <h1>Free Code Camp</h1>
+    <h1>Weather App</h1>
+  </header>
+  <div class="weather">
+    <div class="status">
+      <p><span id="city"></span>, <span id="country"></span></p>
+      <p><span id="temp"></span> °C</p>
+      <p><span id="desc"></span></p>
+    </div>
+    <div class="icon-all">
+      <div class="icon sun-shower hide ">
+        <div class="cloud"></div>
+        <div class="sun">
+          <div class="rays"></div>
+        </div>
+        <div class="rain"></div>
+      </div>
+      <div class="icon thunder-storm hide thunderstom">
+        <div class="cloud"></div>
+        <div class="lightning">
+          <div class="bolt"></div>
+          <div class="bolt"></div>
+        </div>
+      </div>
+      <div class="icon cloudy hide clouds">
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+      </div>
+      <div class="icon flurries hide snow">
+        <div class="cloud"></div>
+        <div class="snow">
+          <div class="flake"></div>
+          <div class="flake"></div>
+        </div>
+      </div>
+      <div class="icon sunny hide clear">
+        <div class="sun">
+          <div class="rays"></div>
+        </div>
+      </div>
+      <div class="icon rainy hide rain">
+        <div class="cloud"></div>
+        <div class="rain"></div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    Inspired By <a href="https://codepen.io/handv/pen/pWaOLN">handw</a>
+  </footer>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js" charset="utf-8"></script>
+  <script type="text/javascript">
+    var api = "https://fcc-weather-api.glitch.me/api/current?";
+    var lat, lon;
+    var tempUnit = 'C';
+    var currentTempInCelsius;
+    $(function() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          lat = 'lat=' + position.coords.latitude;
+          lon = 'lon=' + position.coords.longitude;
+          getWeather();
+        });
+      }
+    });
+
+    function getWeather() {
+      var urlString = api + lat + "&" + lon;
+      $.get({
+        url: urlString,
+        success: function(result) {
+          $("#city").text(result.name);
+          $("#country").text(result.sys.country);
+          currentTempInCelsius = Math.round(result.main.temp * 10) / 10;
+          $("#temp").text(currentTempInCelsius);
+          $("#tempunit").text(tempUnit);
+          $("#desc").text(result.weather[0].main);
+          iconGen(result.weather[0].main);
+        }
+      });
+    }
+
+    function iconGen(desc) {
+      var desc = desc.toLowerCase()
+      switch (desc) {
+        case 'drizzle':
+          addIcon(desc)
+          break;
+        case 'clouds':
+          addIcon(desc)
+          break;
+        case 'rain':
+          addIcon(desc)
+          break;
+        case 'snow':
+          addIcon(desc)
+          break;
+        case 'clear':
+          addIcon(desc)
+          break;
+        case 'thunderstom':
+          addIcon(desc)
+          break;
+        default:
+          $('div.clouds').removeClass('hide');
+      }
+    }
+
+    function addIcon(desc) {
+      $('div.' + desc).removeClass('hide');
+    }
+  </script>
+</body>
+
+</html>

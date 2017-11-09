@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style media="screen">
+    a {
+      width: 10px;
+      height: 10px;
+      padding: 10px;
+      border: 1px solid red;
+    }
+  </style>
+</head>
+<body>
+  <script type="text/javascript">
+    var bodyE = document.body;
+    for(let i=0;i<10;i++){
+      (function(i){
+        var aEle = document.createElement('a');
+        aEle.innerHTML = i;
+        aEle.onclick = function(){
+          alert(i);
+        }
+        bodyE.appendChild(aEle);
+      })(i);
+
+    }
+
+
+    /**function Foo(name) {
+      this.name = name;
+    }
+    Foo.prototype.alertName = function() {
+      alert(this.name);
+    }
+    var f = new Foo('zhangsan');
+    f.printName = function() {
+      console.log(this.name);
+    }
+    f.printName();
+    f.alertName();
+
+    var item;
+    for ( item in f) {
+      //高级浏览器已经在for in中屏蔽了来自原型的属性
+      //但是在这里建议大家还是加上这个判断，保证程序的健壮性
+      if (f.hasOwnProperty(item)) {
+        console.log(item);
+      }
+    }*/
+
+    // function Elem(id) {
+    //   this.elem = document.getElementById(id);
+    // }
+    //
+    // Elem.prototype.html = function(val) {
+    //   var elem = this.elem;
+    //   if(val) {
+    //     elem.innerHTML = val;
+    //     return this;
+    //   } else {
+    //     return elem.innerHTML;
+    //   }
+    // }
+    //
+    // Elem.prototype.on = function(type, fn) {
+    //   var elem = this.elem;
+    //   elem.addEventListener(type, fn);
+    //   return this;
+    // }
+    // var div1 = new Elem('div1');
+    // div1.html('3');
+    // div1.html();
+    // div1.on('click', function() {
+    //   alert('click');
+    // });
+
+
+    /*console.log(add(1,2));
+    console.log(add1(1,2));
+    //函数声明
+    function add(x,y) {
+      return x+y;
+    }
+    //函数表达式
+    var add1 = function(x,y) {
+      return x+y;
+     }
+    */
+
+   /*
+     var a = 100
+     function F1() {
+       var b = 200
+       F2()
+     }
+     function F2() {
+       var c = 300
+       console.log(a)
+       console.log(b)
+       console.log(c)
+     }
+     F1()
+*/
+     console.log(1);
+     setTimeout(function(){
+       console.log(2)
+     },200);
+     console.log(3);
+     setTimeout(function(){
+       console.log(4)
+     },0);
+  </script>
+</body>
+</html>

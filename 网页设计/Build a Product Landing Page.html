@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+    #header {
+      position: fixed;
+      z-index: 10;
+      height: 60px;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      border: 1px solid rgb(194, 191, 191);
+      background: #fff;
+    }
+
+    .left {
+      float: left;
+    }
+
+    #header-img {
+      height: 60px;
+    }
+
+    .right {
+      width: 40%;
+      float: right;
+    }
+
+    #nav-bar {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .nav-link {
+      display: block;
+      line-height: 60px;
+      height: 60px;
+      text-decoration: none;
+      font-size: 24px;
+    }
+    
+    @media (max-width: 640px){
+      .nav-link {
+        font-size: 16px;
+      }
+    }
+
+    #form {
+      width: 20%;
+      padding-top: 100px;
+      margin: 0 auto;
+    }
+
+    #email {
+      display: block;
+      width: 200px;
+      height: 25px;
+      margin: 10px auto;
+    }
+
+    #submit {
+      display: block;
+      width: 150px;
+      height: 30px;
+      background: #f1c40f;
+      margin: 0 auto;
+      outline: none;
+      border: none;
+      border-radius: 4px;
+    }
+
+    #video {
+      display: block;
+      height: 300px;
+      margin: 500px auto;
+    }
+
+    #link {
+      text-align: center;
+      border-top: 1px solid rgb(204, 201, 201);
+    }
+  </style>
+  <title>build a product landing page</title>
+</head>
+
+<body>
+  <header id="header">
+    <div class="left">
+      <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532157625668&di=34146f9d37f3a2b582a2b2be31b0bf79&imgtype=0&src=http%3A%2F%2Fupload.newhua.com%2F2013%2F0408%2F1365411379863.jpg"
+        alt="logo" id="header-img">
+    </div>
+    <div class="right">
+      <nav id="nav-bar">
+        <div class="link">
+          <a href="#form" class="nav-link">Contact</a>
+        </div>
+        <div class="link">
+          <a href="#video" class="nav-link">Video</a>
+        </div>
+        <div class="link">
+          <a href="#link" class="nav-link">Link</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <div class="body">
+    <form action="https://www.freecodecamp.com/email-submit" id="form">
+      <input name="email" type="email" id="email" placeholder="please input your email">
+      <input type="submit" id="submit" value="get started">
+    </form>
+    <video src="https://gslb.miaopai.com/stream/Mlz~VBfhWXvseW1JS-KlOozpv8oUGIlcwSumRQ__.mp4?ssig=fb40a6438551a7eb819bde7e5e42cae6&time_stamp=1532153699536&cookie_id=&vend=1&os=3&partner=1&platform=2&cookie_id=&refer=miaopai&scid=Mlz%7EVBfhWXvseW1JS-KlOozpv8oUGIlcwSumRQ__"
+      id="video" controls="controls">
+    </video>
+  </div>
+  <footer id="link">
+    handv@github
+  </footer>
+</body>
+
+</html>

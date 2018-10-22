@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .main {
+      width: 300px;
+      height: 430px;
+      margin: 10% auto;
+      background: #dfd8d0;
+      border: 2px solid #908b85;
+      border-radius: 10px;
+      box-shadow: 7px 10px 34px 1px rgba(0, 0, 0, 0.68), inset -1px -6px 12px 0.1px #89847e;
+    }
+
+    header {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .entrybox {
+      width: 85%;
+      height: 80px;
+      margin: 20px auto;
+      border-radius: 6px;
+      border: 2px solid #b4b39d;
+      background: #c3c2ab;
+      text-align: right;
+    }
+
+    .entrybox #entry {
+      height: 50px;
+      margin-right: 10px;
+      font-size: 35px;
+      line-height: 50px;
+    }
+
+    .entrybox #history {
+      height: 30px;
+      margin-right: 10px;
+      font-size: 12px;
+      line-height: 30px;
+    }
+
+    .buttons {
+      width: 90%;
+      margin: 20px auto;
+      position: relative;
+    }
+
+    button {
+      width: 50px;
+      height: 40px;
+      border-radius: 8px;
+      border: none;
+      background: #3a3a3a;
+      color: #fff;
+      margin: 0 4px 10px 8px;
+      outline: none;
+      box-shadow: 0px 3px 0px 0px #222121, inset -1px -3px 10px 1px #515151;
+    }
+
+    .red {
+      font-size: 14px;
+      background-color: #a72d45;
+      box-shadow: 0px 3px 0px 0px #671c2a;
+    }
+
+    .invisible {
+      display: none;
+    }
+
+    #zeroButton {
+      width: 118px;
+    }
+
+    #equalButton {
+      position: absolute;
+      right: 5px;
+      bottom: 0;
+      height: 90px;
+    }
+  </style>
+  <title>Calculator</title>
+</head>
+
+<body>
+  <div class="main">
+    <header>
+      电子计算器
+    </header>
+    <div class="entrybox">
+      <div id="entry">
+        0
+      </div>
+      <div id="history">
+        0
+      </div>
+    </div>
+    <div class="buttons">
+      <button class='red' value='ac'>AC</button>
+      <button class='red' value='ce'>CE</button>
+      <button value='/'>&divide;</button>
+      <button value='*'>x</button>
+
+      <button value='7'>7</button>
+      <button value='8'>8</button>
+      <button value='9'>9</button>
+      <button value='-'>-</button>
+
+      <button value='4'>4</button>
+      <button value='5'>5</button>
+      <button value='6'>6</button>
+      <button value='+'>+</button>
+
+      <button value='1'>1</button>
+      <button value='2'>2</button>
+      <button value='3'>3</button>
+      <button class='invisible'>N</button>
+
+      <button id='zeroButton' value='0'>0</button>
+      <button value='.'>.</button>
+      <button id='equalButton' value='='>=</button>
+    </div>
+  </div>
+</body>
+<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+<script>
+  var data = []
+  var num = ''
+  $('button').click(function () {
+    let entry = this.value
+    if (entry === 'ac') {
+      num = ''
+      data = []
+      $('#entry').html(0)
+      $('#history').html(0)
+    } else if (entry === 'ce') {
+      if (data.indexOf('=') !== -1) {
+        num = ''
+        data = []
+        $('#entry').html(0)
+        $('#history').html(0)
+        return
+      }
+      if (num) {
+        data.push(num)
+      }
+      data.pop()
+      num = data.pop()
+      if (/[\+\-\*\/]/.test(num)) {
+        data.push(num)
+        num = ''
+      }
+      $('#entry').html(0)
+      $('#history').html(data.join('') + num)
+    } else if (/[\+\-\*\/]/.test(entry)) {
+      if (num === '') return
+      data.push(num)
+      num = ''
+      data.push(entry)
+      $('#entry').html(entry)
+      $('#history').html(data.join(''))
+    } else if (entry === '.') {
+      if (num.indexOf('.') !== -1) return
+      if (num === '') {
+        num += '0.'
+      } else {
+        num += entry
+      }
+      $('#entry').html(num)
+      $('#history').html(data.join('') + num)
+    } else if (entry === '=') {
+      if (num === '') return
+      data.push(num)
+      num = ''
+      const result = calculate(dal2Rpn(data))
+      data.push(entry)
+      data.push(result)
+      $('#entry').html(result)
+      $('#history').html(data.join(''))
+    } else {
+      num += entry
+      $('#entry').html(num)
+      $('#history').html(data.join('') + num)
+    }
+  })
+
+  // 使用中缀转后缀的逆波兰式表达式，进行四则运算
+  function isOperator(value) {
+    var operatorString = "+-*/";
+    return operatorString.indexOf(value) > -1
+  }
+
+  function getPrioraty(value) {
+    switch (value) {
+      case '+':
+      case '-':
+        return 1;
+      case '*':
+      case '/':
+        return 2;
+      default:
+        return 0;
+    }
+  }
+
+  function prioraty(o1, o2) {
+    return getPrioraty(o1) <= getPrioraty(o2);
+  }
+
+  function dal2Rpn(exp) {
+    var inputStack = exp.concat();
+    var outputStack = [];
+    var outputQueue = [];
+
+    console.log('step one');
+    while (inputStack.length > 0) {
+      var cur = inputStack.shift();
+      //如果遇到操作符，则我们将其放入到栈中
+      if (isOperator(cur)) {
+        /*
+        如果是一个操作符 `+ - * /`则比较它与输出堆栈中栈顶的操作符，
+        如果优先级小于或等于栈顶的操作符，那么将栈顶的操作符弹出并加入输出队列（循环，直到上述条件不满足），
+        最后将本次的操作符压入堆栈。
+        */
+        while (prioraty(cur, outputStack[outputStack.length - 1]) && outputStack.length >
+          0) {
+          outputQueue.push(outputStack.pop());
+        }
+        outputStack.push(cur);
+      }
+      //如果遇到操作数，我们就直接将其输出。
+      else {
+        outputQueue.push(new Number(cur));
+      }
+    }
+    console.log('step two ');
+    if (outputStack.length > 0) {
+      while (outputStack.length > 0) {
+        outputQueue.push(outputStack.pop());
+      }
+    }
+    console.log('step three ');
+    return outputQueue;
+  }
+
+  function calculate(rpnQueue) {
+    var outputStack = [];
+    while (rpnQueue.length > 0) {
+      var cur = rpnQueue.shift();
+      if (!isOperator(cur)) {
+        outputStack.push(cur);
+      } else {
+        if (outputStack.length < 2) {
+          throw "unvalid stack length";
+        }
+        var sec = Number(outputStack.pop());
+        var fir = Number(outputStack.pop());
+        outputStack.push(getResult(fir, sec, cur));
+      }
+    }
+    if (outputStack.length != 1) {
+      throw "unvalid expression";
+    } else {
+      return outputStack[0];
+    }
+  }
+
+  function getResult(fir, sec, cur) {
+    switch (cur) {
+      case '+':
+        return fir + sec
+        break;
+      case '-':
+        return fir - sec
+        break;
+      case '*':
+        return fir * sec
+        break;
+      case '/':
+        return fir / sec
+        break;
+      default:
+        break;
+    }
+  }
+</script>
+
+</html>

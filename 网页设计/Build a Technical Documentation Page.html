@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+    #navbar {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 300px;
+      border-right: 2px solid rgb(153, 150, 150);
+      text-indent: 2em;
+    }
+    
+    @media(max-width: 640px) {
+      #navbar {
+        width: 200px;
+      }
+    }
+
+    #navbar header {
+      line-height: 60px;
+      height: 60px;
+      font-size: 30px;
+      border-bottom: 1px solid rgb(153, 150, 150);
+    }
+
+    .nav-link {
+      display: block;
+      text-decoration: none;
+      font-size: 24px;
+      border-bottom: 1px solid rgb(153, 150, 150);
+      line-height: 60px;
+      height: 60px;
+    }
+
+    #main-doc {
+      padding-left: 310px;
+    }
+
+    .main-section header {
+      font-weight: bold;
+      font-size: 30px;
+    }
+
+    .main-section p {
+      text-indent: 4em;
+    }
+
+    code {
+      display: block;
+      background: rgb(221, 217, 217);
+      border-radius: 4px;
+      margin-bottom: 10px;
+      line-height: 20px;
+      padding-left: 10px;
+      word-break: normal;
+      word-wrap: normal;
+      white-space: pre; /* 空白会被浏览器保留。其行为方式类似 HTML 中的 <pre> 标签。 */
+    }
+  </style>
+  <title>Build a Technical Documentation Page</title>
+</head>
+
+<body>
+  <nav id="navbar">
+    <header>one piece</header>
+    <a href="#lufy" class="nav-link">lufy</a>
+    <a href="#zelo" class="nav-link">zelo</a>
+    <a href="#saji" class="nav-link">saji</a>
+    <a href="#nami" class="nav-link">nami</a>
+  </nav>
+  <main id="main-doc">
+    <section class="main-section" id="lufy">
+      <header>lufy</header>
+      <p>caption of caomao</p>
+      <p>one piece</p>
+      <p>the king of pirate</p>
+    </section>
+    <section class="main-section" id="zelo">
+      <header>zelo</header>
+      <p>sword of caomao</p>
+      <p>one piece</p>
+      <p>king of the sword</p>
+      <code>
+        if (condition_1) { 
+          statement_1; 
+        } else if (condition_2) { 
+          statement_2; 
+        } else if (condition_n) { 
+          statement_n; 
+        } else { 
+          statement_last;
+        }
+    </code>
+      <code><strong>baqi</strong></code>
+      <code>
+if (condition) {
+  statement_1_runs_if_condition_is_true;
+  statement_2_runs_if_condition_is_true;
+} else {
+  statement_3_runs_if_condition_is_false;
+  statement_4_runs_if_condition_is_false;
+}
+      </code>
+      <code>
+if (condition) {
+  statement_1_runs_if_condition_is_true;
+  statement_2_runs_if_condition_is_true;
+} else {
+  statement_3_runs_if_condition_is_false;
+  statement_4_runs_if_condition_is_false;
+}
+      </code>
+      <code>
+if (condition) {
+  statement_1_runs_if_condition_is_true;
+  statement_2_runs_if_condition_is_true;
+} else {
+  statement_3_runs_if_condition_is_false;
+  statement_4_runs_if_condition_is_false;
+}        
+      </code>
+    </section>
+    <section class="main-section" id="saji">
+      <header>saji</header>
+      <p>cook of caomao</p>
+      <p>one piece</p>
+      <p>all blue</p>
+      <ul>
+        <li>nami</li>
+        <li>robin</li>
+        <li>white star</li>
+        <li>vivi</li>
+        <li>wife</li>
+      </ul>
+    </section>
+    <section class="main-section" id="nami">
+      <header>nami</header>
+      <p>navigator of caomao</p>
+      <p>one piece</p>
+    </section>
+  </main>
+</body>
+
+</html>

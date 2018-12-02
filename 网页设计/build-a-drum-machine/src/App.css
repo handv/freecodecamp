@@ -1,0 +1,51 @@
+* {
+  font-family: Russo One;
+  font-weight: 500;
+}
+
+#drum-machine {
+  outline: 5px solid orange;
+  position: relative;
+  width: 660px;
+  text-align: center;
+  background-color: #b3b3b3;
+  margin: 100px auto;
+}
+
+.drum-pads {
+  width: 330px;
+  height: 280px;
+  padding: 30px;
+}
+
+.drum-pad {
+  width: 100px;
+  height: 80px;
+  margin-top: 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+  padding-top: 35px;
+  box-sizing: border-box;
+  cursor: pointer;
+  background-color: grey;
+  box-shadow: black 3px 3px 5px;
+  display: inline-block;
+}
+
+.active-pad {
+  background-color: orange;
+  margin-top: 13px;
+  box-shadow: orange 0 3px;
+  height: 77px;
+}
+
+#display {
+  width: 200px;
+  background-color: gray;
+  margin: 15px auto;
+  padding: 15px;
+  box-sizing: border-box;
+  position: absolute;
+  right: 30px;
+  top: 150px;
+}
